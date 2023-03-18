@@ -1,0 +1,23 @@
+<div class="main-outer">
+    <div class="container-fluid p-0 m-0">
+        <div class="row m-0">
+            <div class="col-md-12 p-0 header">
+                <app-header></app-header>
+            </div>
+            <div class="col-md-12 d-flex p-0">
+                <div class="sidebar">
+                    <app-sidebar></app-sidebar>
+                </div>
+                <div class="content" style="width:100%;">
+                    <div class="row">
+                        <div class="col-md-12 m-1">
+                            <div class="p-2 border rounded">
+                                <router-outlet></router-outlet>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,131 @@
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="">
+        <button class="nav-link me-1 active " data-bs-toggle="tab" data-bs-target="#details" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Details</button>
+        <button class="nav-link me-1" *ngIf="isEdit" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#fields_list" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Field List</button>
+        <button class="nav-link me-1" *ngIf="isEdit" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#schedule" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Schedules</button>
+        <button class="nav-link me-1" *ngIf="isEdit" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#schedule_list" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Schedules Runs</button>
+        <button class="nav-link me-1" *ngIf="isEdit" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#source_object" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Data Source Objects</button>
+    </div>
+</nav>
+<div class="tab-content mt-3" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="nav-home-tab">
+      <div class="row">
+        <div class="col-md-12">
+          <form [formGroup]="schemaData" (submit)="saveSchema()" #createSchemaFormRef="ngForm">
+            <div ng class="row">
+              <div class="mb-3 col-md-4">
+                <label for="schea_name" class="form-label">Schema Name</label>
+                <input type="text" formControlName="name" [class.is-invalid]="schemaData.get('name')?.invalid && (schemaData.get('name')?.touched || createSchemaFormRef.submitted)" (keyup)="generateSchemaId()" class="form-control" id="name" placeholder="Schema Name">
+                <div *ngIf="((schemaData.get('name')?.invalid && (schemaData.get('name')?.touched || createSchemaFormRef.submitted)) || schemaData.get('name')==null)">
+                  <small *ngIf="schemaData.get('name')?.errors?.['required'] && (createSchemaFormRef.submitted || schemaData.get('name')?.invalid)" class="text-danger">Schema name is required.</small>
+                </div>
+                <!-- <app-text-input [fieldData]="{label:'Schema Nameasdf',field_id:'name',formControlName:'name'}"></app-text-input>
+                <app-form-errors [fieldStatus]="schemaData.get('name')" [formSubmitStatus]="createSchemaFormRef"></app-form-errors> -->
+              </div>
+              <div class="mb-3 col-md-4">
+                <label for="schema_key" class="form-label">Schema Key (Auto Generated)</label>
+                <input type="text" formControlName="schema_id" class="form-control"  id="schema_id" name="schema_id" placeholder="Schema Key">
+              </div>
+              <div class="mb-3 col-md-4">
+                <label for="user_name" class="form-label">User Name</label>
+                <input type="text" formControlName="user_name" [class.is-invalid]="schemaData.get('user_name')?.invalid && schemaData.get('user_name')?.touched"  class="form-control" id="user_name" placeholder="User Name">
+                <div *ngIf="((schemaData.get('user_name')?.invalid && schemaData.get('user_name')?.touched) || schemaData.get('user_name')==null)">
+                  <small *ngIf="schemaData.get('user_name')?.errors?.['required']" class="text-danger">User name is required.</small>
+                </div>
+              </div>
+              <div class="mb-3 col-md-4">
+                <label for="password" class="form-label">password</label>
+                <input type="password" formControlName="password"  [class.is-invalid]="schemaData.get('password')?.invalid && schemaData.get('password')?.touched"  class="form-control" id="password" placeholder="Password">
+                <div *ngIf="((schemaData.get('password')?.invalid && schemaData.get('password')?.touched) || schemaData.get('password')==null)">
+                  <small *ngIf="schemaData.get('password')?.errors?.['required']" class="text-danger">Password is required.</small>
+                </div>
+              </div>
+              <div class="mb-3 col-md-4">
+                <label for="url" class="form-label">URL</label>
+                <input type="text" formControlName="url"  [class.is-invalid]="schemaData.get('url')?.invalid && schemaData.get('url')?.touched"  class="form-control" id="url" placeholder="URL">
+                <div *ngIf="((schemaData.get('url')?.invalid && schemaData.get('url')?.touched) || schemaData.get('url')==null)">
+                  <small *ngIf="schemaData.get('url')?.errors?.['required']" class="text-danger">URL is required.</small>
+                </div>
+              </div>
+              <div class="mb-3 col-md-4">
+                <label for="port" class="form-label">Port</label>
+                <input type="number" formControlName="port"  [class.is-invalid]="schemaData.get('port')?.invalid && schemaData.get('port')?.touched"  class="form-control" id="port" placeholder="Port number">
+                <div *ngIf="((schemaData.get('port')?.invalid && schemaData.get('port')?.touched) || schemaData.get('port')==null)">
+                  <small *ngIf="schemaData.get('port')?.errors?.['required']" class="text-danger">Port numbers is required.</small>
+                </div>
+              </div>
+              <div class="mb-3 col-md-4">
+                <label for="schea_name" class="form-label">Directory Path</label>
+                <input type="text" formControlName="dir_path"  [class.is-invalid]="schemaData.get('dir_path')?.invalid && schemaData.get('dir_path')?.touched"  class="form-control" id="dir_path" placeholder="Directory Path">
+                <div *ngIf="((schemaData.get('dir_path')?.invalid && schemaData.get('dir_path')?.touched) || schemaData.get('dir_path')==null)">
+                  <small *ngIf="schemaData.get('dir_path')?.errors?.['required']" class="text-danger">Directory path is required.</small>
+                </div>
+              </div>
+              <div class="mb-3 col-md-4">
+                <label for="file_name" class="form-label">File Name</label>
+                <input type="text" formControlName="file_name"  [class.is-invalid]="schemaData.get('file_name')?.invalid && schemaData.get('file_name')?.touched"  class="form-control" id="file_name" placeholder="File Name">
+                <div *ngIf="((schemaData.get('file_name')?.invalid && schemaData.get('file_name')?.touched) || schemaData.get('file_name')==null)">
+                  <small *ngIf="schemaData.get('file_name')?.errors?.['required']" class="text-danger">File name is required.</small>
+                </div>
+              </div>
+              <div class="mb-3 col-md-4">
+                <label for="disabledSelect" class="form-label">File Type</label>
+                <select id="file_type" formControlName="file_type"  class="form-select">
+                  <option value="CSV">CSV</option>
+                  <option value="EXCEL">EXCEL</option>
+                  <option value="JSON">JSON</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <button type="submit"  id="detailsSubmitButton" class="btn btn-primary" [class.allowClick]="allowSubmit">{{ isEdit ? 'Update' : 'Submit'}}</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="fields_list" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <div class="table_outer px-2">
+          <app-popup button_text="+" [show_pop_up]="togglePopUp">
+            <app-form-builder [fieldsData]="newFieldForm" (submitedFormData)="addNewField($event)"></app-form-builder>
+          </app-popup>
+          <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Field Name</th>
+                  <th scope="col">Field Desc</th>
+                  <th scope="col">Field Type</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let field of fieldsData">
+                  <td>{{ field.name }}</td>
+                  <td>{{ field.desc }}</td>
+                  <td>{{ field.data_type }}</td>
+                </tr>
+              </tbody>
+            </table>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="schedule" role="tabpanel" aria-labelledby="nav-contact-tab">
+      <button type="button" *ngIf="fieldsData.length > 0" class="btn btn-primary" (click)="runscheduleNow()">Run now</button>
+    </div>
+    <div class="tab-pane fade" id="schedule_list" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+    <div class="tab-pane fade" id="source_object" role="tabpanel" aria-labelledby="nav-contact-tab">
+        <div class="table_outer px-2">
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col" *ngFor="let data of fieldsData">{{ data.name }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let obj of dataSourceObjects">
+                    <td scope="col" *ngFor="let data of fieldsData">{{ obj[data.name] }}</td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+        </div>
+    </div>
+</div>

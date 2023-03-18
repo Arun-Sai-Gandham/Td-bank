@@ -1,0 +1,16 @@
+.nav-tabs{
+    border-bottom: 0px;
+    .nav-link{
+        border: 0px;
+        color:gray;
+        &:hover{
+            border-bottom: 2px solid gray;
+            color:black;
+        }
+        &.active{
+            border-bottom: 2px solid gray;
+            color:black;
+        }
+        
+    }
+}

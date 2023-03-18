@@ -1,0 +1,50 @@
+<div class="form-outer">
+    <form [formGroup]="formData"  #createFormRef="ngForm" (submit)="submitForm()">
+        <div class="row">
+            <div *ngFor="let eachField of fieldsData" class="{{ eachField.outer_classes ? eachField.outer_classes : 'col-md-4 mb-3 '}}">
+              <div  [ngSwitch]="eachField.type" >
+                <div *ngSwitchCase="'text'">
+                  <label for="{{ eachField.label_classes ? eachField.label_classes : ''}}" class="form-label {{ eachField.label_classes ? eachField.label_classes : ''}}">{{ eachField.label }}</label>
+                  <input type="text" [formControlName]="eachField.key || ''" [class.is-invalid]="formData.get(eachField.key)?.invalid && (formData.get(eachField.key)?.touched || formData.submitted)" class="form-control {{ eachField.input_classes ? eachField.input_classes : ''}}" [id]="eachField.key" [placeholder]="eachField.placeholder || ''">
+                </div>
+                <div *ngSwitchCase="'select'">
+                  <label for="{{ eachField.label_classes ? eachField.label_classes : ''}}" class="form-label {{ eachField.label_classes ? eachField.label_classes : ''}}">{{ eachField.label }}</label>
+                  <select [formControlName]="eachField.key || ''" [class.is-invalid]="formData.get(eachField.key)?.invalid && (formData.get(eachField.key)?.touched || formData.submitted)" class="form-control {{ eachField.input_classes ? eachField.input_classes : ''}}" [id]="eachField.key">
+                    <option *ngFor="let option of eachField.options || []" [value]="option.key">{{ option.value }}</option>
+                  </select>
+                </div>
+                <div *ngSwitchCase="'radio'">
+                  <label for="{{ eachField.label_classes ? eachField.label_classes : ''}}" class="form-label {{ eachField.label_classes ? eachField.label_classes : ''}}">{{ eachField.label }}</label>
+                  <div class="d-flex">
+                    <div *ngFor="let option of eachField.options || []" class="me-3">
+                        <input type="radio" [value]="option" class="form-check-input" [name]="eachField.name || ''" [formControlName]="eachField.key || ''">
+                        <label class="form-check-label">{{ option }}</label>
+                    </div>
+                  </div>
+                </div>
+                <div *ngSwitchCase="'checkbox'">
+                  <label for="{{ eachField.label_classes ? eachField.label_classes : ''}}" class="form-label {{ eachField.label_classes ? eachField.label_classes : ''}}">{{ eachField.label }}</label>
+                  <div class="d-flex flex-wrap">
+                    <div *ngFor="let option of eachField.options || []" class="me-3">
+                        <input type="checkbox" [value]="option" class="form-check-input me-1" [name]="eachField.name || ''" [formControlName]="eachField.key || ''">
+                        <label class="form-check-label">{{ option }}</label>
+                    </div>
+                  </div>
+                </div>
+                <div *ngSwitchCase="'file'">
+                  <label for="{{ eachField.label_classes ? eachField.label_classes : ''}}" class="form-label {{ eachField.label_classes ? eachField.label_classes : ''}}">{{ eachField.label }}</label>
+                  <input type="file" [formControlName]="eachField.key || ''" [class.is-invalid]="formData.get(eachField.key)?.invalid && (formData.get(eachField.key)?.touched || formData.submitted)" class="form-control {{ eachField.input_classes ? eachField.input_classes : ''}}" [id]="eachField.key" [placeholder]="eachField.placeholder || ''">
+                </div>
+                <div *ngSwitchDefault>
+                  <label for="{{ eachField.label_classes ? eachField.label_classes : ''}}" class="form-label {{ eachField.label_classes ? eachField.label_classes : ''}}">{{ eachField.label }}</label>
+                  <input type="text" [formControlName]="eachField.key || ''" [class.is-invalid]="formData.get(eachField.key)?.invalid && (formData.get(eachField.key)?.touched || formData.submitted)" class="form-control {{ eachField.input_classes ? eachField.input_classes : ''}}" [id]="eachField.key" [placeholder]="eachField.placeholder || ''">
+                </div>
+              </div>
+              <app-form-errors [fieldStatus]="formData.get(eachField.key)"></app-form-errors>
+            </div>
+        </div>
+        <div class="col-md-3 my-2">
+          <button type="submit" class="btn btn-primary">{{ submitButtonText ? submitButtonText : 'Submit' }}</button>
+        </div>
+    </form>
+</div>

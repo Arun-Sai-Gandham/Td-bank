@@ -1,0 +1,6 @@
+<div class="form-group">
+    <label for="{{id}}">{{ label }}</label>
+    <select class="form-select" aria-label="Default select example" id="{{ label }}" name="{{id}}">
+        <option *ngFor="let option of options" [value]="option.value">{{ option.description }}</option>
+    </select>
+</div>

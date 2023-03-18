@@ -1,0 +1,7 @@
+<div *ngIf="((fieldStatus?.invalid && (fieldStatus?.touched)) || fieldStatus==null)">
+    <small *ngIf="fieldStatus?.errors?.['required'] && (fieldStatus?.invalid)" class="text-danger">{{ 0 || "This field" }} is required.</small>
+    <small *ngIf="fieldStatus?.errors?.['minlength'] && (fieldStatus?.invalid)" class="text-danger">Min length is required.</small>
+    <small *ngIf="fieldStatus?.errors?.['maxlength'] && (fieldStatus?.invalid)" class="text-danger">Max length reached.</small>
+    <small *ngIf="fieldStatus?.errors?.['pattern'] && (fieldStatus?.invalid)" class="text-danger">Pattern mis-match.</small>
+    <small *ngif="fieldStatus.errors?.['email'] && (fieldStatus?.invalid)">Email address is invalid</small>
+</div>

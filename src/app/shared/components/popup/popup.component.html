@@ -1,0 +1,7 @@
+<button class="btn btn-success" (click)="togglePopup()">{{ button_text || 'show' }}</button>
+<div class="popup" [ngClass]="{ 'show': showPopup }">
+<div class="popup-content">
+    <button class="close-button btn btn-info" (click)="togglePopup()">x</button>
+    <ng-content></ng-content>
+</div>
+</div>

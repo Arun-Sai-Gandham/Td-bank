@@ -1,0 +1,4 @@
+<div>
+    <label for="schea_name" class="form-label">{{ fieldData.label }}</label>
+    <input type="text" class="form-control" [formControlName]="fieldData.formControlName || ''" [class.is-invalid]="false || false" [id]="fieldData.id" [name]="fieldData.name || fieldData.name" [placeholder]="fieldData.placeholder || 'Enter ' +fieldData.label">
+</div>

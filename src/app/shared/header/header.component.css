@@ -1,0 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&display=swap");
+ul li a {
+  cursor: pointer;
+}
+ul li a.active {
+  background-image: linear-gradient(to bottom, gray, var(--bs-body-color));
+}
+ul li a:hover {
+  background-image: linear-gradient(to bottom, gray, var(--bs-body-color));
+}
+
+.logo {
+  font-family: "Libre Baskerville", serif;
+  color: white;
+}/*# sourceMappingURL=header.component.css.map */
